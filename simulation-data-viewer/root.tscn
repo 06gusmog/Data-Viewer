@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://c5ivqntyp0t2i"]
+[gd_scene load_steps=5 format=3 uid="uid://c5ivqntyp0t2i"]
 
 [ext_resource type="Script" path="res://Scripts/lineage_viewer.gd" id="1_1junf"]
+[ext_resource type="Script" path="res://Scripts/root.gd" id="1_s5ybp"]
+[ext_resource type="Script" path="res://Scripts/file_selecter.gd" id="2_kfihq"]
+[ext_resource type="Texture2D" uid="uid://dm307lgysn45s" path="res://icon.svg" id="4_prhs8"]
 
 [node name="Root" type="Control"]
 layout_mode = 3
@@ -9,6 +12,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_s5ybp")
 
 [node name="Tools" type="TabContainer" parent="."]
 layout_mode = 1
@@ -17,17 +21,37 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 0
+current_tab = 1
 
 [node name="File Selecter" type="HBoxContainer" parent="Tools"]
+visible = false
 layout_mode = 2
+script = ExtResource("2_kfihq")
 metadata/_tab_index = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Tools/File Selecter"]
 layout_mode = 2
 
+[node name="Refresh" type="Button" parent="Tools/File Selecter/VBoxContainer"]
+layout_mode = 2
+text = "Refresh Folders"
+
+[node name="Files" type="MenuButton" parent="Tools/File Selecter/VBoxContainer"]
+layout_mode = 2
+text = "Folders"
+
+[node name="Selected Folder" type="Label" parent="Tools/File Selecter/VBoxContainer"]
+layout_mode = 2
+
+[node name="Tolerance" type="LineEdit" parent="Tools/File Selecter/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Tolerance"
+
+[node name="Load" type="Button" parent="Tools/File Selecter/VBoxContainer"]
+layout_mode = 2
+text = "Load Creature Register"
+
 [node name="Lineage Viewer" type="HBoxContainer" parent="Tools"]
-visible = false
 layout_mode = 2
 script = ExtResource("1_1junf")
 metadata/_tab_index = 1
@@ -35,10 +59,32 @@ metadata/_tab_index = 1
 [node name="Button Panel" type="VBoxContainer" parent="Tools/Lineage Viewer"]
 layout_mode = 2
 
-[node name="Draw Lineage Tree" type="Button" parent="Tools/Lineage Viewer/Button Panel"]
+[node name="MenuButton" type="MenuButton" parent="Tools/Lineage Viewer/Button Panel"]
 layout_mode = 2
-text = "Draw Lineage Tree
+text = "Select Lineage"
+
+[node name="Lineage Selected" type="Label" parent="Tools/Lineage Viewer/Button Panel"]
+layout_mode = 2
+
+[node name="Draw Full" type="Button" parent="Tools/Lineage Viewer/Button Panel"]
+layout_mode = 2
+text = "Draw Full Lineage Tree
 "
+
+[node name="Depth" type="LineEdit" parent="Tools/Lineage Viewer/Button Panel"]
+layout_mode = 2
+
+[node name="Draw Depth" type="Button" parent="Tools/Lineage Viewer/Button Panel"]
+layout_mode = 2
+text = "Draw With Depth"
+
+[node name="Divider" type="ColorRect" parent="Tools/Lineage Viewer/Button Panel"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Download" type="Button" parent="Tools/Lineage Viewer/Button Panel"]
+layout_mode = 2
+text = "Download Image"
 
 [node name="Visual Divider" type="ColorRect" parent="Tools/Lineage Viewer"]
 custom_minimum_size = Vector2(20, 0)
@@ -47,3 +93,18 @@ layout_mode = 2
 [node name="Main Window" type="ScrollContainer" parent="Tools/Lineage Viewer"]
 layout_mode = 2
 size_flags_horizontal = 3
+
+[node name="Godot Wizardy" type="HBoxContainer" parent="Tools/Lineage Viewer/Main Window"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="Tools/Lineage Viewer/Main Window/Godot Wizardy"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("4_prhs8")
+stretch_mode = 4
+
+[connection signal="button_down" from="Tools/File Selecter/VBoxContainer/Refresh" to="Tools/File Selecter" method="_on_refresh_button_down"]
+[connection signal="button_down" from="Tools/File Selecter/VBoxContainer/Load" to="Tools/File Selecter" method="_on_load_button_down"]
+[connection signal="button_down" from="Tools/Lineage Viewer/Button Panel/Draw Full" to="Tools/Lineage Viewer" method="_on_draw_full"]
+[connection signal="button_down" from="Tools/Lineage Viewer/Button Panel/Draw Depth" to="Tools/Lineage Viewer" method="_on_draw_depth"]
+[connection signal="button_down" from="Tools/Lineage Viewer/Button Panel/Download" to="Tools/Lineage Viewer" method="_on_download_button_down"]

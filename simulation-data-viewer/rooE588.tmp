@@ -1,0 +1,70 @@
+[gd_scene load_steps=4 format=3 uid="uid://c5ivqntyp0t2i"]
+
+[ext_resource type="Script" path="res://Scripts/lineage_viewer.gd" id="1_1junf"]
+[ext_resource type="Script" path="res://Scripts/root.gd" id="1_s5ybp"]
+[ext_resource type="Script" path="res://Scripts/file_selecter.gd" id="2_kfihq"]
+
+[node name="Root" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_s5ybp")
+
+[node name="Tools" type="TabContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+current_tab = 0
+
+[node name="File Selecter" type="HBoxContainer" parent="Tools"]
+layout_mode = 2
+script = ExtResource("2_kfihq")
+metadata/_tab_index = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tools/File Selecter"]
+layout_mode = 2
+
+[node name="Refresh" type="Button" parent="Tools/File Selecter/VBoxContainer"]
+layout_mode = 2
+text = "Refresh Folders"
+
+[node name="Files" type="MenuButton" parent="Tools/File Selecter/VBoxContainer"]
+layout_mode = 2
+text = "Folders"
+
+[node name="Selected Folder" type="Label" parent="Tools/File Selecter/VBoxContainer"]
+layout_mode = 2
+
+[node name="Load" type="Button" parent="Tools/File Selecter/VBoxContainer"]
+layout_mode = 2
+text = "Load Creature Register"
+
+[node name="Lineage Viewer" type="HBoxContainer" parent="Tools"]
+visible = false
+layout_mode = 2
+script = ExtResource("1_1junf")
+metadata/_tab_index = 1
+
+[node name="Button Panel" type="VBoxContainer" parent="Tools/Lineage Viewer"]
+layout_mode = 2
+
+[node name="Draw Lineage Tree" type="Button" parent="Tools/Lineage Viewer/Button Panel"]
+layout_mode = 2
+text = "Draw Lineage Tree
+"
+
+[node name="Visual Divider" type="ColorRect" parent="Tools/Lineage Viewer"]
+custom_minimum_size = Vector2(20, 0)
+layout_mode = 2
+
+[node name="Main Window" type="ScrollContainer" parent="Tools/Lineage Viewer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[connection signal="button_down" from="Tools/File Selecter/VBoxContainer/Refresh" to="Tools/File Selecter" method="_on_refresh_button_down"]
