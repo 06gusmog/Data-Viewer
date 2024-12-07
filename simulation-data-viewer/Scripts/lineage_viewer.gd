@@ -20,14 +20,15 @@ func _on_lineage_selected(index):
 
 func _on_draw_full():
 	if lineage_selected.text != '':
-		var image = get_image(lineage_selected.text)
+		var image = get_image(lineage_selected.text.split('-')[0])
 		texture_rect.texture = ImageTexture.create_from_image(image)
 
 func _on_draw_depth() -> void:
 	if lineage_selected.text != '' and depth.text != '':
 		print('drawing')
-		var image = get_image_depth(lineage_selected.text, int(depth.text))
+		var image = get_image_depth(lineage_selected.text.split('-')[0], int(depth.text))
 		texture_rect.texture = ImageTexture.create_from_image(image[0])
+		
 
 func _on_download_button_down() -> void:
 	var number = str(len(DirAccess.get_files_at(SAVE_LOCATION)))
@@ -58,6 +59,9 @@ func get_image_depth(creatureID, depth: int):
 			if images[-1].get_height() > sizey:
 				sizey = images[-1].get_height()
 			sizex += images[-1].get_width()
+		
+		if local_depth >= depth:
+			root.loaded_lineage[creatureID] = root.get_creature(creatureID)
 		
 		if len(images) == 1:
 			var selfie = generate_icon(root.get_creature(creatureID)[4], GlobalSettings.color_sheet)

@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://c5ivqntyp0t2i"]
+[gd_scene load_steps=6 format=3 uid="uid://c5ivqntyp0t2i"]
 
 [ext_resource type="Script" path="res://Scripts/lineage_viewer.gd" id="1_1junf"]
 [ext_resource type="Script" path="res://Scripts/root.gd" id="1_s5ybp"]
 [ext_resource type="Script" path="res://Scripts/file_selecter.gd" id="2_kfihq"]
 [ext_resource type="Texture2D" uid="uid://dm307lgysn45s" path="res://icon.svg" id="4_prhs8"]
+[ext_resource type="Script" path="res://Scripts/creature_viewer.gd" id="5_ttm4g"]
 
 [node name="Root" type="Control"]
 layout_mode = 3
@@ -21,7 +22,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 1
+current_tab = 2
 
 [node name="File Selecter" type="HBoxContainer" parent="Tools"]
 visible = false
@@ -52,6 +53,7 @@ layout_mode = 2
 text = "Load Creature Register"
 
 [node name="Lineage Viewer" type="HBoxContainer" parent="Tools"]
+visible = false
 layout_mode = 2
 script = ExtResource("1_1junf")
 metadata/_tab_index = 1
@@ -102,6 +104,18 @@ layout_mode = 2
 size_flags_vertical = 3
 texture = ExtResource("4_prhs8")
 stretch_mode = 4
+
+[node name="Creature Viewer" type="HBoxContainer" parent="Tools"]
+layout_mode = 2
+script = ExtResource("5_ttm4g")
+metadata/_tab_index = 2
+
+[node name="Information" type="VBoxContainer" parent="Tools/Creature Viewer"]
+layout_mode = 2
+
+[node name="Lineage Selected" type="Label" parent="Tools/Creature Viewer/Information"]
+layout_mode = 2
+text = "Lineage selected: None. Please load one in Lineage Viewer."
 
 [connection signal="button_down" from="Tools/File Selecter/VBoxContainer/Refresh" to="Tools/File Selecter" method="_on_refresh_button_down"]
 [connection signal="button_down" from="Tools/File Selecter/VBoxContainer/Load" to="Tools/File Selecter" method="_on_load_button_down"]

@@ -3,6 +3,7 @@ extends Control
 var DATA_FOLDER = "res://Data Folder/"
 var creature_register = {}
 var lineages = {}
+var loaded_lineage = {}
 
 func get_creature(creatureID):
 	return creature_register[creatureID]
@@ -38,10 +39,10 @@ func load_creature_register(folder_name, tolerance: int):
 
 	for root_creature in creature_register['-1'][1]:
 		var lineage = get_relative_lineage(root_creature)
-		#print(len(lineage))
-		if len(lineage) > tolerance:
+		var lineage_len = len(lineage)
+		if lineage_len > tolerance:
 			print(root_creature)
-			lineages[root_creature] = lineage
+			lineages[root_creature + '-' + str(lineage_len)] = lineage
 	print('Done!')
 func get_relative_lineage(creatureID):
 	# Get first creature in the chain
