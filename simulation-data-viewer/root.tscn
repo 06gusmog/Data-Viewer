@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://c5ivqntyp0t2i"]
+[gd_scene load_steps=7 format=3 uid="uid://c5ivqntyp0t2i"]
 
 [ext_resource type="Script" path="res://Scripts/lineage_viewer.gd" id="1_1junf"]
 [ext_resource type="Script" path="res://Scripts/root.gd" id="1_s5ybp"]
 [ext_resource type="Script" path="res://Scripts/file_selecter.gd" id="2_kfihq"]
 [ext_resource type="Texture2D" uid="uid://dm307lgysn45s" path="res://icon.svg" id="4_prhs8"]
 [ext_resource type="Script" path="res://Scripts/creature_viewer.gd" id="5_ttm4g"]
+[ext_resource type="Script" path="res://Scripts/testing_space.gd" id="6_juqa6"]
 
 [node name="Root" type="Control"]
 layout_mode = 3
@@ -117,8 +118,20 @@ layout_mode = 2
 layout_mode = 2
 text = "Lineage selected: None. Please load one in Lineage Viewer."
 
+[node name="Testing Space" type="HBoxContainer" parent="Tools"]
+visible = false
+layout_mode = 2
+script = ExtResource("6_juqa6")
+metadata/_tab_index = 3
+
+[node name="Test Input" type="Button" parent="Tools/Testing Space"]
+layout_mode = 2
+text = "Click me!
+"
+
 [connection signal="button_down" from="Tools/File Selecter/VBoxContainer/Refresh" to="Tools/File Selecter" method="_on_refresh_button_down"]
 [connection signal="button_down" from="Tools/File Selecter/VBoxContainer/Load" to="Tools/File Selecter" method="_on_load_button_down"]
 [connection signal="button_down" from="Tools/Lineage Viewer/Button Panel/Draw Full" to="Tools/Lineage Viewer" method="_on_draw_full"]
 [connection signal="button_down" from="Tools/Lineage Viewer/Button Panel/Draw Depth" to="Tools/Lineage Viewer" method="_on_draw_depth"]
 [connection signal="button_down" from="Tools/Lineage Viewer/Button Panel/Download" to="Tools/Lineage Viewer" method="_on_download_button_down"]
+[connection signal="button_down" from="Tools/Testing Space/Test Input" to="Tools/Testing Space" method="_on_test_input_button_down"]

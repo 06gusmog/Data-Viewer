@@ -44,6 +44,24 @@ func load_creature_register(folder_name, tolerance: int):
 			print(root_creature)
 			lineages[root_creature + '-' + str(lineage_len)] = lineage
 	print('Done!')
+
+func match_DNA(creature1, creature2):
+	var result = []
+	for i in range(min(len(creature1), len(creature2))):
+		result.append(creature1[i]['Type'] == creature2[i]['Type'])
+		for x in range(5):
+			result.append(creature1[i]['Special Sauce'][x] == creature2[i]['Special Sauce'][x])
+		result.append(creature1[i]['Position'] == creature2[i]['Position'])
+		if len(creature1[i]['Connections']) <= len(creature1[i]['Connections']):
+			for con in creature1[i]['Connections']:
+				result.append(con in creature2[i]['Connections'])
+		else:
+			for con in creature2[i]['Connections']:
+				result.append(con in creature1[i]['Connections'])
+		for x in range(abs(len(creature1[i]['Connections'])-len(creature1[i]['Connections']))):
+			result.append(false)
+	return result
+
 func get_relative_lineage(creatureID):
 	# Get first creature in the chain
 	var parentID = get_creature(creatureID)[0]

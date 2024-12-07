@@ -28,7 +28,6 @@ func _on_draw_depth() -> void:
 		print('drawing')
 		var image = get_image_depth(lineage_selected.text.split('-')[0], int(depth.text))
 		texture_rect.texture = ImageTexture.create_from_image(image[0])
-		
 
 func _on_download_button_down() -> void:
 	var number = str(len(DirAccess.get_files_at(SAVE_LOCATION)))
