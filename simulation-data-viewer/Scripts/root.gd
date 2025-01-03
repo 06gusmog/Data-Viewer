@@ -28,7 +28,7 @@ func load_creature_register(folder_name, tolerance: int):
 			creature.append(config.get_value(creatureID, "DNA"))
 			creature_register[creatureID] = creature
 		i += 1
-	
+	"""
 	# DANGER REMOVE THIS!! IT FUCKS EVERYTHING UP!!!
 	for creatureID in creature_register:
 		if creatureID == '-1':
@@ -36,7 +36,7 @@ func load_creature_register(folder_name, tolerance: int):
 		if get_creature(creatureID)[0] == "-1":
 			creature_register['-1'][1].append(creatureID)
 	# DANGER REMOVE CODE ABOVE !!!!!!!!!
-
+	"""
 	for root_creature in creature_register['-1'][1]:
 		var lineage = get_relative_lineage(root_creature)
 		var lineage_len = len(lineage)

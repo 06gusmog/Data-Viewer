@@ -3,7 +3,7 @@ extends HBoxContainer
 @onready var menu_button: MenuButton = $"Button Panel/MenuButton"
 @onready var lineage_selected: Label = $"Button Panel/Lineage Selected"
 @onready var root: Control = $"../.."
-@onready var texture_rect: TextureRect = $"Main Window/Godot Wizardy/TextureRect"
+@onready var texture_rect = $"Main Window/Godot Wizardry/TextureRect"
 @onready var depth: LineEdit = $"Button Panel/Depth"
 
 var SAVE_LOCATION = "res://Saved Lineages/"

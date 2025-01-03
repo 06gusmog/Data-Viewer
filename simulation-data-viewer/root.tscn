@@ -3,9 +3,11 @@
 [ext_resource type="Script" path="res://Scripts/lineage_viewer.gd" id="1_1junf"]
 [ext_resource type="Script" path="res://Scripts/root.gd" id="1_s5ybp"]
 [ext_resource type="Script" path="res://Scripts/file_selecter.gd" id="2_kfihq"]
-[ext_resource type="Texture2D" uid="uid://dm307lgysn45s" path="res://icon.svg" id="4_prhs8"]
 [ext_resource type="Script" path="res://Scripts/creature_viewer.gd" id="5_ttm4g"]
 [ext_resource type="Script" path="res://Scripts/testing_space.gd" id="6_juqa6"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_q1ylh"]
+load_path = "res://.godot/imported/saved_lineage6.png-ad80dfd59603dcceba61e5ad6ad7bad9.ctex"
 
 [node name="Root" type="Control"]
 layout_mode = 3
@@ -23,7 +25,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 2
+current_tab = 1
 
 [node name="File Selecter" type="HBoxContainer" parent="Tools"]
 visible = false
@@ -54,7 +56,6 @@ layout_mode = 2
 text = "Load Creature Register"
 
 [node name="Lineage Viewer" type="HBoxContainer" parent="Tools"]
-visible = false
 layout_mode = 2
 script = ExtResource("1_1junf")
 metadata/_tab_index = 1
@@ -97,16 +98,19 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Godot Wizardy" type="HBoxContainer" parent="Tools/Lineage Viewer/Main Window"]
+[node name="Godot Wizardry" type="VBoxContainer" parent="Tools/Lineage Viewer/Main Window"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
-[node name="TextureRect" type="TextureRect" parent="Tools/Lineage Viewer/Main Window/Godot Wizardy"]
+[node name="TextureRect" type="TextureRect" parent="Tools/Lineage Viewer/Main Window/Godot Wizardry"]
 layout_mode = 2
 size_flags_vertical = 3
-texture = ExtResource("4_prhs8")
-stretch_mode = 4
+texture = SubResource("CompressedTexture2D_q1ylh")
+expand_mode = 5
 
 [node name="Creature Viewer" type="HBoxContainer" parent="Tools"]
+visible = false
 layout_mode = 2
 script = ExtResource("5_ttm4g")
 metadata/_tab_index = 2
