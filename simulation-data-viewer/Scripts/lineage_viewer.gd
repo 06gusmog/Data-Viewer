@@ -26,8 +26,10 @@ func _on_draw_full():
 func _on_draw_depth() -> void:
 	if lineage_selected.text != '' and depth.text != '':
 		print('drawing')
+		root.loaded_lineage = {}
 		var image = get_image_depth(lineage_selected.text.split('-')[0], int(depth.text))
 		texture_rect.texture = ImageTexture.create_from_image(image[0])
+		root.loaded_root = lineage_selected.text.split('-')[0]
 
 func _on_download_button_down() -> void:
 	var number = str(len(DirAccess.get_files_at(SAVE_LOCATION)))
@@ -41,6 +43,7 @@ func get_image_depth(creatureID, depth: int):
 	var edge_color = Color.WHITE
 	var childrenIDs = root.get_creature(creatureID)[1]
 	var local_depth = 0
+	var included_childrenIDs = []
 	if len(childrenIDs) > 0:
 		# Get all child icons recursively
 		var images = []
@@ -54,13 +57,19 @@ func get_image_depth(creatureID, depth: int):
 				local_depth = generations
 			if generations < depth:
 				continue
+			included_childrenIDs.append(str(childID))
 			images.append(selfie)
 			if images[-1].get_height() > sizey:
 				sizey = images[-1].get_height()
 			sizex += images[-1].get_width()
 		
-		if local_depth >= depth:
+		if local_depth +1 >= depth:
+			var new_creature = root.get_creature(creatureID)
+			new_creature[1] = included_childrenIDs
+			if local_depth == depth:
+				new_creature[1] = []
 			root.loaded_lineage[creatureID] = root.get_creature(creatureID)
+			
 		
 		if len(images) == 1:
 			var selfie = generate_icon(root.get_creature(creatureID)[4], GlobalSettings.color_sheet)

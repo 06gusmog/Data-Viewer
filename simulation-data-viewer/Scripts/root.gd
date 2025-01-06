@@ -4,6 +4,9 @@ var DATA_FOLDER = "res://Data Folder/"
 var creature_register = {}
 var lineages = {}
 var loaded_lineage = {}
+var loaded_root = '-1'
+
+var saved_creatures = {}
 
 func get_creature(creatureID):
 	return creature_register[creatureID]
@@ -28,7 +31,7 @@ func load_creature_register(folder_name, tolerance: int):
 			creature.append(config.get_value(creatureID, "DNA"))
 			creature_register[creatureID] = creature
 		i += 1
-	"""
+	
 	# DANGER REMOVE THIS!! IT FUCKS EVERYTHING UP!!!
 	for creatureID in creature_register:
 		if creatureID == '-1':
@@ -36,7 +39,7 @@ func load_creature_register(folder_name, tolerance: int):
 		if get_creature(creatureID)[0] == "-1":
 			creature_register['-1'][1].append(creatureID)
 	# DANGER REMOVE CODE ABOVE !!!!!!!!!
-	"""
+	
 	for root_creature in creature_register['-1'][1]:
 		var lineage = get_relative_lineage(root_creature)
 		var lineage_len = len(lineage)
@@ -59,6 +62,9 @@ func match_DNA(creature1, creature2):
 			for con in creature2[i]['Connections']:
 				result.append(con in creature1[i]['Connections'])
 		for x in range(abs(len(creature1[i]['Connections'])-len(creature1[i]['Connections']))):
+			result.append(false)
+	for x in range(max(len(creature1), len(creature2))-min(len(creature1), len(creature2))):
+		for i in range(10):
 			result.append(false)
 	return result
 

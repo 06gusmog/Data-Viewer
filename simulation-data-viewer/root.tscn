@@ -1,13 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://c5ivqntyp0t2i"]
+[gd_scene load_steps=9 format=3 uid="uid://c5ivqntyp0t2i"]
 
 [ext_resource type="Script" path="res://Scripts/lineage_viewer.gd" id="1_1junf"]
 [ext_resource type="Script" path="res://Scripts/root.gd" id="1_s5ybp"]
 [ext_resource type="Script" path="res://Scripts/file_selecter.gd" id="2_kfihq"]
 [ext_resource type="Script" path="res://Scripts/creature_viewer.gd" id="5_ttm4g"]
+[ext_resource type="Texture2D" uid="uid://dm307lgysn45s" path="res://icon.svg" id="5_uay0o"]
+[ext_resource type="Script" path="res://Scripts/creature_analyzer.gd" id="6_5hl30"]
 [ext_resource type="Script" path="res://Scripts/testing_space.gd" id="6_juqa6"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_q1ylh"]
-load_path = "res://.godot/imported/saved_lineage6.png-ad80dfd59603dcceba61e5ad6ad7bad9.ctex"
 
 [node name="Root" type="Control"]
 layout_mode = 3
@@ -25,7 +26,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 1
+current_tab = 3
 
 [node name="File Selecter" type="HBoxContainer" parent="Tools"]
 visible = false
@@ -56,6 +57,7 @@ layout_mode = 2
 text = "Load Creature Register"
 
 [node name="Lineage Viewer" type="HBoxContainer" parent="Tools"]
+visible = false
 layout_mode = 2
 script = ExtResource("1_1junf")
 metadata/_tab_index = 1
@@ -109,24 +111,119 @@ size_flags_vertical = 3
 texture = SubResource("CompressedTexture2D_q1ylh")
 expand_mode = 5
 
-[node name="Creature Viewer" type="HBoxContainer" parent="Tools"]
+[node name="Creature Selecter" type="HBoxContainer" parent="Tools"]
 visible = false
 layout_mode = 2
 script = ExtResource("5_ttm4g")
 metadata/_tab_index = 2
 
-[node name="Information" type="VBoxContainer" parent="Tools/Creature Viewer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Tools/Creature Selecter"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Control Panel" type="VBoxContainer" parent="Tools/Creature Selecter/HBoxContainer"]
 layout_mode = 2
 
-[node name="Lineage Selected" type="Label" parent="Tools/Creature Viewer/Information"]
+[node name="Update" type="Button" parent="Tools/Creature Selecter/HBoxContainer/Control Panel"]
 layout_mode = 2
-text = "Lineage selected: None. Please load one in Lineage Viewer."
+text = "Update Selected Lineage"
+
+[node name="Child Selector" type="MenuButton" parent="Tools/Creature Selecter/HBoxContainer/Control Panel"]
+layout_mode = 2
+text = "Select Child
+"
+
+[node name="Back" type="Button" parent="Tools/Creature Selecter/HBoxContainer/Control Panel"]
+layout_mode = 2
+text = "Back"
+
+[node name="ColorRect" type="ColorRect" parent="Tools/Creature Selecter/HBoxContainer/Control Panel"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="Save Name" type="LineEdit" parent="Tools/Creature Selecter/HBoxContainer/Control Panel"]
+layout_mode = 2
+placeholder_text = "Save Name"
+
+[node name="Save Creature" type="Button" parent="Tools/Creature Selecter/HBoxContainer/Control Panel"]
+layout_mode = 2
+text = "Save CreatureID
+"
+
+[node name="Overwrite Creature" type="Button" parent="Tools/Creature Selecter/HBoxContainer/Control Panel"]
+layout_mode = 2
+text = "Overwrite CreatureID"
+
+[node name="Lineage Preview" type="ScrollContainer" parent="Tools/Creature Selecter/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Godot Wizardry" type="VBoxContainer" parent="Tools/Creature Selecter/HBoxContainer/Lineage Preview"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="Tools/Creature Selecter/HBoxContainer/Lineage Preview/Godot Wizardry"]
+layout_mode = 2
+size_flags_vertical = 3
+texture = ExtResource("5_uay0o")
+expand_mode = 5
+
+[node name="Creature Analyzer" type="HBoxContainer" parent="Tools"]
+layout_mode = 2
+script = ExtResource("6_5hl30")
+metadata/_tab_index = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Tools/Creature Analyzer"]
+layout_mode = 2
+
+[node name="Control Panel" type="VBoxContainer" parent="Tools/Creature Analyzer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Update" type="Button" parent="Tools/Creature Analyzer/HBoxContainer/Control Panel"]
+layout_mode = 2
+text = "Update"
+
+[node name="New" type="MenuButton" parent="Tools/Creature Analyzer/HBoxContainer/Control Panel"]
+layout_mode = 2
+text = "Select New Creature
+"
+
+[node name="Remove" type="MenuButton" parent="Tools/Creature Analyzer/HBoxContainer/Control Panel"]
+layout_mode = 2
+text = "Remove Selected Creature"
+
+[node name="ColorRect" type="ColorRect" parent="Tools/Creature Analyzer/HBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="Selected Creatures" type="Label" parent="Tools/Creature Analyzer/HBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="ColorRect2" type="ColorRect" parent="Tools/Creature Analyzer/HBoxContainer"]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="Tools" type="VBoxContainer" parent="Tools/Creature Analyzer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Compare DNA" type="Button" parent="Tools/Creature Analyzer/HBoxContainer/Tools"]
+layout_mode = 2
+text = "Compare DNA
+"
+
+[node name="ALL DNA" type="Button" parent="Tools/Creature Analyzer/HBoxContainer/Tools"]
+layout_mode = 2
+text = "Compare All DNA"
 
 [node name="Testing Space" type="HBoxContainer" parent="Tools"]
 visible = false
 layout_mode = 2
 script = ExtResource("6_juqa6")
-metadata/_tab_index = 3
+metadata/_tab_index = 4
 
 [node name="Test Input" type="Button" parent="Tools/Testing Space"]
 layout_mode = 2
@@ -138,4 +235,11 @@ text = "Click me!
 [connection signal="button_down" from="Tools/Lineage Viewer/Button Panel/Draw Full" to="Tools/Lineage Viewer" method="_on_draw_full"]
 [connection signal="button_down" from="Tools/Lineage Viewer/Button Panel/Draw Depth" to="Tools/Lineage Viewer" method="_on_draw_depth"]
 [connection signal="button_down" from="Tools/Lineage Viewer/Button Panel/Download" to="Tools/Lineage Viewer" method="_on_download_button_down"]
+[connection signal="button_down" from="Tools/Creature Selecter/HBoxContainer/Control Panel/Update" to="Tools/Creature Selecter" method="_on_update_button_down"]
+[connection signal="button_down" from="Tools/Creature Selecter/HBoxContainer/Control Panel/Back" to="Tools/Creature Selecter" method="_on_back_button_down"]
+[connection signal="button_down" from="Tools/Creature Selecter/HBoxContainer/Control Panel/Save Creature" to="Tools/Creature Selecter" method="_on_save_creature_button_down"]
+[connection signal="button_down" from="Tools/Creature Selecter/HBoxContainer/Control Panel/Overwrite Creature" to="Tools/Creature Selecter" method="_on_overwrite_creature_button_down"]
+[connection signal="button_down" from="Tools/Creature Analyzer/HBoxContainer/Control Panel/Update" to="Tools/Creature Analyzer" method="_on_update_button_down"]
+[connection signal="button_down" from="Tools/Creature Analyzer/HBoxContainer/Tools/Compare DNA" to="Tools/Creature Analyzer" method="_compare_DNA"]
+[connection signal="button_down" from="Tools/Creature Analyzer/HBoxContainer/Tools/ALL DNA" to="Tools/Creature Analyzer" method="_on_all_dna_button_down"]
 [connection signal="button_down" from="Tools/Testing Space/Test Input" to="Tools/Testing Space" method="_on_test_input_button_down"]
