@@ -22,33 +22,48 @@ func get_parents(creatureID):
 	return parents
 
 # NOTE Completely untested
+"""
 func DNA_match_percent(ID1, ID2):
-	var result = root.match_DNA(root.get_creature(ID1)[4], root.get_creature(ID2)[4])
+	if ID1 == '-1' or ID2 == '-1':
+		return 0.0
+	var result = root.better_match_DNA(root.get_creature(ID1)[4], root.get_creature(ID2)[4])
 	var sum = 0
 	for item in result:
 		sum += int(item)
 	return float(sum) / float(len(result))
+"""
+func DNA_match_percent(ID1, ID2):
+	if ID1 == '-1' or ID2 == '-1':
+		return 0.0
+	return root.better_match_DNA(root.get_creature(ID1)[4], root.get_creature(ID2)[4])
+	
 
 func _compare_ALL_DNA():
 	var relatedness = []
 	var DNA_match = []
+	var i_ = 0
 	for creature_name in selected_creatures.text.split('\n'):
 		var creature_name_ID = root.saved_creatures[creature_name]
 		var name_parents = get_parents(creature_name_ID)
 		name_parents.reverse()
 		for other_creature in root.creature_register:
+			if i_ % 100 == 0:
+				print(i_)
 			if creature_name_ID == other_creature:
 				continue
 			var other_parents = get_parents(other_creature)
 			other_parents.reverse()
 			if other_parents[0] == name_parents[0]:
+				var to_add = max(len(name_parents), len(other_parents)) - min(len(name_parents), len(other_parents))
 				for i in range(min(len(name_parents), len(other_parents))):
-					if other_parents[i] == name_parents[i]:
-						relatedness.append(len(name_parents) + len(other_parents) - 2*i)
+					if other_parents[i] != name_parents[i]:
+						to_add = len(name_parents) + len(other_parents) - 2*i
 						break
+				relatedness.append(to_add)
 			else:
 				relatedness.append('-1')
 			DNA_match.append(DNA_match_percent(creature_name_ID, other_creature))
+			i_ += 1
 	return [relatedness, DNA_match]
 
 

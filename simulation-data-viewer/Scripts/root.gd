@@ -68,6 +68,60 @@ func match_DNA(creature1, creature2):
 			result.append(false)
 	return result
 
+func match_RNA(r1, r2):
+	var result = []
+	if r1 is String or r2 is String:
+		for i in range(10):
+			result.append(false)
+		return result
+	result.append(r1['Type'] == r2['Type'])
+	for x in range(5):
+		result.append(r1['Special Sauce'][x] == r2['Special Sauce'][x])
+	result.append(r1['Position'] == r2['Position'])
+	if len(r1['Connections']) <= len(r2['Connections']):
+		for con in r1['Connections']:
+			result.append(con in r2['Connections'])
+	else:
+		for con in r2['Connections']:
+			result.append(con in r1['Connections'])
+	for x in range(abs(len(r1['Connections'])-len(r2['Connections']))):
+		result.append(false)
+	return result
+
+func basic_match_DNA(c1, c2):
+	var result = []
+	for i in range(min(len(c1), len(c2))):
+		result.append_array(match_RNA(c1[i], c2[i]))
+	for x in range(max(len(c1), len(c2))-min(len(c1), len(c2))):
+		for i in range(10):
+			result.append(false)
+	var sum = 0
+	for item in result:
+		sum += int(item)
+	return float(sum) / float(len(result))
+
+func better_match_DNA(c1, c2):
+	var short
+	var long
+	if min(len(c1), len(c2)) == len(c1):
+		short = str_to_var(var_to_str(c1))
+		long = str_to_var(var_to_str(c2))
+	else:
+		short = str_to_var(var_to_str(c2))
+		long = str_to_var(var_to_str(c1))
+	var best_score = 0.0
+	var best_test = short
+	for x in range(len(long) - len(short)):
+		for i in range(len(short) +1):
+			var test_DNA = str_to_var(var_to_str(short))
+			test_DNA.insert(i, 'Blank')
+			var score = basic_match_DNA(test_DNA, long)
+			if score > best_score:
+				best_test = test_DNA
+				best_score = score
+		short = best_test
+	return basic_match_DNA(short, long)
+
 func get_relative_lineage(creatureID):
 	# Get first creature in the chain
 	var parentID = get_creature(creatureID)[0]

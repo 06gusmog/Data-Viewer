@@ -15,11 +15,16 @@ y = 'DNA-match percentage'
 for index, row in df.iterrows():
     #print(type(row[x]))
     #print(type(minvalues[x]))
+    #if row[x] < 10 and row[x]!= -1:
+    #    print(row[x])
     hist2d[int(((row[x]-minvalues[x])/(maxvalues[x]-minvalues[x]))*(size-1))][int(((row[y]-minvalues[y])/(maxvalues[y]-minvalues[y]))*(size-1))] += 1
 
 print(maxvalues[x])
+print(maxvalues[y])
 
 def heat(value):
+    #if 0<value < 2:
+    #    return (0,0,255)
     if 0 <= value and value <= 255:
         return (value, 0, 0)
     thing = (value - 256) / 10
