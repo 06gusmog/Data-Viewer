@@ -26,7 +26,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-current_tab = 3
+current_tab = 2
 
 [node name="File Selecter" type="HBoxContainer" parent="Tools"]
 visible = false
@@ -112,7 +112,6 @@ texture = SubResource("CompressedTexture2D_q1ylh")
 expand_mode = 5
 
 [node name="Creature Selecter" type="HBoxContainer" parent="Tools"]
-visible = false
 layout_mode = 2
 script = ExtResource("5_ttm4g")
 metadata/_tab_index = 2
@@ -127,6 +126,10 @@ layout_mode = 2
 [node name="Update" type="Button" parent="Tools/Creature Selecter/HBoxContainer/Control Panel"]
 layout_mode = 2
 text = "Update Selected Lineage"
+
+[node name="Down Button" type="Button" parent="Tools/Creature Selecter/HBoxContainer/Control Panel"]
+layout_mode = 2
+text = "Down"
 
 [node name="Child Selector" type="MenuButton" parent="Tools/Creature Selecter/HBoxContainer/Control Panel"]
 layout_mode = 2
@@ -169,7 +172,17 @@ size_flags_vertical = 3
 texture = ExtResource("5_uay0o")
 expand_mode = 5
 
+[node name="Info" type="VBoxContainer" parent="Tools/Creature Selecter/HBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+
+[node name="Info Label" type="Label" parent="Tools/Creature Selecter/HBoxContainer/Info"]
+layout_mode = 2
+text = "time of birth 
+child count"
+
 [node name="Creature Analyzer" type="HBoxContainer" parent="Tools"]
+visible = false
 layout_mode = 2
 script = ExtResource("6_5hl30")
 metadata/_tab_index = 3
@@ -236,6 +249,7 @@ text = "Click me!
 [connection signal="button_down" from="Tools/Lineage Viewer/Button Panel/Draw Depth" to="Tools/Lineage Viewer" method="_on_draw_depth"]
 [connection signal="button_down" from="Tools/Lineage Viewer/Button Panel/Download" to="Tools/Lineage Viewer" method="_on_download_button_down"]
 [connection signal="button_down" from="Tools/Creature Selecter/HBoxContainer/Control Panel/Update" to="Tools/Creature Selecter" method="_on_update_button_down"]
+[connection signal="button_down" from="Tools/Creature Selecter/HBoxContainer/Control Panel/Down Button" to="Tools/Creature Selecter" method="_on_down_button_button_down"]
 [connection signal="button_down" from="Tools/Creature Selecter/HBoxContainer/Control Panel/Back" to="Tools/Creature Selecter" method="_on_back_button_down"]
 [connection signal="button_down" from="Tools/Creature Selecter/HBoxContainer/Control Panel/Save Creature" to="Tools/Creature Selecter" method="_on_save_creature_button_down"]
 [connection signal="button_down" from="Tools/Creature Selecter/HBoxContainer/Control Panel/Overwrite Creature" to="Tools/Creature Selecter" method="_on_overwrite_creature_button_down"]

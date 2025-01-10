@@ -4,6 +4,7 @@ extends HBoxContainer
 @onready var root = $"../.."
 @onready var texture_rect = $"HBoxContainer/Lineage Preview/Godot Wizardry/TextureRect"
 @onready var save_name = $"HBoxContainer/Control Panel/Save Name"
+@onready var info_label = $"HBoxContainer/Info/Info Label"
 
 var local_root = '-1'
 var popup
@@ -11,6 +12,13 @@ var popup
 func _ready() -> void:
 	popup = child_selector.get_popup()
 	popup.index_pressed.connect(_on_select_current_child_button_down)
+
+func update_info():
+	var c = root.get_creature(local_root)
+	info_label.text = "
+	Time Of Birth: {0}
+	Child Count: {1}
+	".format([c[2], len(c[1])])
 
 func _on_update_button_down():
 	if root.loaded_lineage == {}:
@@ -22,6 +30,7 @@ func _on_update_button_down():
 	popup.clear()
 	for x in range(len(root.loaded_lineage[local_root][1])):
 		popup.add_item(str(x+1))
+	update_info()
 
 func _on_select_current_child_button_down(i):
 	var iID = root.loaded_lineage[local_root][1][i]
@@ -31,6 +40,14 @@ func _on_select_current_child_button_down(i):
 	popup.clear()
 	for x in range(len(root.loaded_lineage[local_root][1])):
 		popup.add_item(str(x+1))
+	update_info()
+
+func _on_down_button_button_down():
+	if len(root.loaded_lineage[local_root][1]) == 0:
+		print('Bottom reached')
+		return
+	_on_select_current_child_button_down(0)
+
 
 func _on_back_button_down():
 	if local_root == root.loaded_root:
@@ -42,6 +59,7 @@ func _on_back_button_down():
 	popup.clear()
 	for x in range(len(root.loaded_lineage[local_root][1])):
 		popup.add_item(str(x+1))
+	update_info()
 
 func _on_save_creature_button_down():
 	if save_name.text == '':
@@ -60,6 +78,7 @@ func _on_overwrite_creature_button_down():
 		print('Creature is not saved under this name! Please select a new name or click save!')
 		return
 	root.saved_creatures[save_name.text] = local_root
+
 
 
 func get_image(creatureID: String):

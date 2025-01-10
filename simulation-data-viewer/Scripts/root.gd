@@ -111,7 +111,8 @@ func better_match_DNA(c1, c2):
 		long = str_to_var(var_to_str(c1))
 	var best_score = 0.0
 	var best_test = short
-	for x in range(len(long) - len(short)):
+	for x in range(2):
+		best_test = short
 		for i in range(len(short) +1):
 			var test_DNA = str_to_var(var_to_str(short))
 			test_DNA.insert(i, 'Blank')
@@ -120,6 +121,15 @@ func better_match_DNA(c1, c2):
 				best_test = test_DNA
 				best_score = score
 		short = best_test
+		best_test = long
+		for i in range(len(long) +1):
+			var test_DNA = str_to_var(var_to_str(long))
+			test_DNA.insert(i, 'Blank')
+			var score = basic_match_DNA(test_DNA, short)
+			if score > best_score:
+				best_test = test_DNA
+				best_score = score
+		long = best_test
 	return basic_match_DNA(short, long)
 
 func get_relative_lineage(creatureID):
