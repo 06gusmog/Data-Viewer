@@ -4,6 +4,8 @@ extends HBoxContainer
 @onready var new = $"HBoxContainer/Control Panel/New"
 @onready var remove = $"HBoxContainer/Control Panel/Remove"
 @onready var selected_creatures = $"HBoxContainer/Selected Creatures"
+@onready var lineage_viewer = $"../Lineage Viewer"
+
 var new_popup
 var remove_popup
 
@@ -68,9 +70,32 @@ func _compare_ALL_DNA():
 			i_ += 1
 	return [relatedness, DNA_match]
 
+func draw_evo_history(creatureID):
+	var result = Image.create(0,0,false, Image.FORMAT_RGBA8)
+	var previous_DNA = []
+	var paddingy = 1
+	while root.get_creature(creatureID)[0] != '-1':
+		var creature = root.get_creature(creatureID)
+		creatureID = creature[0]
+		var current_DNA = get_cell_type_DNA(creature[4])
+		if current_DNA == previous_DNA:
+			continue
+		previous_DNA = current_DNA
+		var selfie = lineage_viewer.generate_icon(creature[4], GlobalSettings.color_sheet)
+		var groupie = Image.create(max(selfie.get_width(), result.get_width()), result.get_height() + paddingy + selfie.get_height(), false, Image.FORMAT_RGBA8)
+		groupie.fill(Color.BLACK)
+		var selfie_rect = Rect2(Vector2(0,0), Vector2(selfie.get_width(), selfie.get_height()))
+		var result_rect = Rect2(Vector2(0,0), Vector2(result.get_width(), result.get_height()))
+		groupie.blit_rect(selfie, selfie_rect, Vector2(0, 0))
+		groupie.blit_rect(result, result_rect, Vector2(0, selfie.get_height() + paddingy))
+		result = groupie
+	return result
 
-
-
+func get_cell_type_DNA(DNA):
+	var new_DNA = []
+	for item in DNA:
+		new_DNA.append(item['Type'])
+	return new_DNA
 
 
 
@@ -116,3 +141,7 @@ func _on_all_dna_button_down():
 	var result = _compare_ALL_DNA()
 	for i in range(len(result[0])):
 		savefile.store_line(str(result[0][i]) + '	' + str(result[1][i]))
+
+
+func _on_evo_history_button_down():
+	draw_evo_history(root.saved_creatures[selected_creatures.text.split('\n')[0]]).save_png('res://Tool Output/evo_history.png')
