@@ -43,7 +43,7 @@ for x in range(size):
         #print((hist2d[x][y],hist2d[x][y],hist2d[x][y]))
         window.fill(heat(hist2d[x][y]), pygame.rect.Rect(x*scale, size*scale-y*scale, scale, scale))
 
-
+pygame.image.save(window, 'latest_hist2d.png')
 
 while True:
     for event in pygame.event.get():

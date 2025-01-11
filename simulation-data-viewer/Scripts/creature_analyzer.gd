@@ -35,10 +35,12 @@ func DNA_match_percent(ID1, ID2):
 func DNA_match_percent(ID1, ID2):
 	if ID1 == '-1' or ID2 == '-1':
 		return 0.0
+	#print(ID2)
 	return root.better_match_DNA(root.get_creature(ID1)[4], root.get_creature(ID2)[4])
 	
 
 func _compare_ALL_DNA():
+	var creature_count = len(root.creature_register) * len(selected_creatures.text.split('\n'))
 	var relatedness = []
 	var DNA_match = []
 	var i_ = 0
@@ -48,7 +50,7 @@ func _compare_ALL_DNA():
 		name_parents.reverse()
 		for other_creature in root.creature_register:
 			if i_ % 100 == 0:
-				print(i_)
+				print(str(i_) + '/' + str(creature_count))
 			if creature_name_ID == other_creature:
 				continue
 			var other_parents = get_parents(other_creature)

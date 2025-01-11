@@ -92,6 +92,7 @@ func basic_match_DNA(c1, c2):
 	var result = []
 	for i in range(min(len(c1), len(c2))):
 		result.append_array(match_RNA(c1[i], c2[i]))
+	
 	for x in range(max(len(c1), len(c2))-min(len(c1), len(c2))):
 		for i in range(10):
 			result.append(false)
@@ -111,25 +112,38 @@ func better_match_DNA(c1, c2):
 		long = str_to_var(var_to_str(c1))
 	var best_score = 0.0
 	var best_test = short
-	for x in range(2):
-		best_test = short
-		for i in range(len(short) +1):
-			var test_DNA = str_to_var(var_to_str(short))
-			test_DNA.insert(i, 'Blank')
-			var score = basic_match_DNA(test_DNA, long)
-			if score > best_score:
-				best_test = test_DNA
-				best_score = score
-		short = best_test
-		best_test = long
-		for i in range(len(long) +1):
-			var test_DNA = str_to_var(var_to_str(long))
-			test_DNA.insert(i, 'Blank')
-			var score = basic_match_DNA(test_DNA, short)
-			if score > best_score:
-				best_test = test_DNA
-				best_score = score
-		long = best_test
+	var max = 20
+	var skip = [false, false]
+	while (not(skip[0]) or not(skip[1])) and max > 0:
+		if not(skip[0]):
+			#print(short[-1])
+			best_test = short
+			for i in range(len(short)):
+				var test_DNA = str_to_var(var_to_str(short))
+				test_DNA.insert(i, 'Blank')
+				var score = basic_match_DNA(test_DNA, long)
+				if score >= best_score:
+					best_test = test_DNA
+					best_score = score
+			if short == best_test:
+				skip[0] = true
+			short = best_test
+		if not(skip[1]):
+			#print(long[-1])
+			best_test = long
+			for i in range(len(long)):
+				var test_DNA = str_to_var(var_to_str(long))
+				test_DNA.insert(i, 'Blank')
+				var score = basic_match_DNA(test_DNA, short)
+				if score >= best_score:
+					best_test = test_DNA
+					best_score = score
+			if long == best_test:
+				skip[1] = true
+			long = best_test
+		max -= 1
+	if !max > 0:
+		print('Limit reached!')
 	return basic_match_DNA(short, long)
 
 func get_relative_lineage(creatureID):
