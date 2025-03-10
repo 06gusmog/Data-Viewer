@@ -40,12 +40,13 @@ func load_creature_register(folder_name, tolerance: int):
 			creature_register['-1'][1].append(creatureID)
 	# DANGER REMOVE CODE ABOVE !!!!!!!!!
 	
+	
 	for root_creature in creature_register['-1'][1]:
-		var lineage = get_relative_lineage(root_creature)
+		var lineage = get_relative_lineage(str(root_creature))
 		var lineage_len = len(lineage)
 		if lineage_len > tolerance:
 			print(root_creature)
-			lineages[root_creature + '-' + str(lineage_len)] = lineage
+			lineages[str(root_creature) + '-' + str(lineage_len)] = lineage
 	print('Done!')
 
 func match_DNA(creature1, creature2):

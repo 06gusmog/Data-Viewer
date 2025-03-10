@@ -42,6 +42,7 @@ func get_image_depth(creatureID, depth: int):
 	var edge_thickness = 1
 	var edge_color = Color.WHITE
 	var childrenIDs = root.get_creature(creatureID)[1]
+	root.loaded_lineage[creatureID] = root.get_creature(creatureID)
 	var local_depth = 0
 	var included_childrenIDs = []
 	if len(childrenIDs) > 0:
@@ -68,7 +69,7 @@ func get_image_depth(creatureID, depth: int):
 			new_creature[1] = included_childrenIDs
 			if local_depth == depth:
 				new_creature[1] = []
-			root.loaded_lineage[creatureID] = root.get_creature(creatureID)
+			
 			
 		
 		if len(images) == 1:

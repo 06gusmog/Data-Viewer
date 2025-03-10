@@ -236,6 +236,9 @@ text = "Compare All DNA"
 layout_mode = 2
 text = "Draw Evolutionary History"
 
+[node name="Selected Cell Ratio" type="Button" parent="Tools/Creature Analyzer/HBoxContainer/Tools"]
+layout_mode = 2
+
 [node name="Testing Space" type="HBoxContainer" parent="Tools"]
 visible = false
 layout_mode = 2
@@ -261,4 +264,5 @@ text = "Click me!
 [connection signal="button_down" from="Tools/Creature Analyzer/HBoxContainer/Tools/Compare DNA" to="Tools/Creature Analyzer" method="_compare_DNA"]
 [connection signal="button_down" from="Tools/Creature Analyzer/HBoxContainer/Tools/ALL DNA" to="Tools/Creature Analyzer" method="_on_all_dna_button_down"]
 [connection signal="button_down" from="Tools/Creature Analyzer/HBoxContainer/Tools/Evo History" to="Tools/Creature Analyzer" method="_on_evo_history_button_down"]
+[connection signal="button_down" from="Tools/Creature Analyzer/HBoxContainer/Tools/Selected Cell Ratio" to="Tools/Creature Analyzer" method="_graph_creature"]
 [connection signal="button_down" from="Tools/Testing Space/Test Input" to="Tools/Testing Space" method="_on_test_input_button_down"]

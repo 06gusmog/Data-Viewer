@@ -145,3 +145,32 @@ func _on_all_dna_button_down():
 
 func _on_evo_history_button_down():
 	draw_evo_history(root.saved_creatures[selected_creatures.text.split('\n')[0]]).save_png('res://Tool Output/evo_history.png')
+
+func _graph_creature() -> void:
+	var savefile = FileAccess.open("res://Tool Output/Cell_graph.txt", FileAccess.WRITE)
+	savefile.store_line('eye_cell.tscn,neuron_cell.tscn,hearing_cell.tscn,eating_cell.tscn,rotation_cell.tscn,armor_cell.tscn,smelling_cell.tscn,move_cell.tscn')
+	for creature_id in root.loaded_lineage:
+		if creature_id == '-1':
+			continue
+		var snippet = {'eye_cell.tscn':0, 'neuron_cell.tscn':0, 'hearing_cell.tscn':0, 'eating_cell.tscn':0, 'rotation_cell.tscn':0, 'armor_cell.tscn':0, 'smelling_cell.tscn':0, 'move_cell.tscn':0}
+		for cell in root.loaded_lineage[creature_id][4]:
+			snippet[cell['Type']] += 1
+		var to_store = '0'
+		for cell_type in snippet:
+			to_store += ','+ str(snippet[cell_type])
+		savefile.store_line(to_store)
+	print('Done!')
+
+"""
+
+func _graph_creature() -> void:
+	var savefile = FileAccess.open("res://Tool Output/Cell_graph.txt", FileAccess.WRITE)
+	savefile.store_line('time,cell_type')
+	for creature_id in root.loaded_lineage:
+		if creature_id == '-1':
+			continue
+		#var snippet = {'eye_cell.tscn':0, 'neuron_cell.tscn':0, 'hearing_cell.tscn':0, 'eating_cell.tscn':0, 'rotation_cell.tscn':0, 'armor_cell.tscn':0, 'smelling_cell.tscn':0, 'move_cell.tscn':0}
+		for cell in root.loaded_lineage[creature_id][4]:
+			savefile.store_line(str(creature_id) + ',' + cell['Type'])
+	print('Done!')
+"""
